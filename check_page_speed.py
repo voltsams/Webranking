@@ -12,6 +12,4 @@ def check_page_speed():
     # Print the page load time in seconds
     print(f"Page load time: {page_load_time:.2f} seconds")
 
-# Example usage:
 check_page_speed()
-

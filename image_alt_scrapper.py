@@ -1,6 +1,8 @@
 import img
 import requests
 from bs4 import BeautifulSoup
+
+
 # Function to check if an image has an "alt" attribute
 def has_alt_attribute(img):
     return "alt" in img.attrs
