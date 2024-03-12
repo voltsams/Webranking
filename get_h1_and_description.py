@@ -23,4 +23,5 @@ def get_h1_and_description():
     else:
         print('No meta description found')
 
+
 get_h1_and_description()

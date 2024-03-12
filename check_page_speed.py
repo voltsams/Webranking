@@ -1,5 +1,8 @@
 import requests
 import time
+import threading
+
+
 def check_page_speed():
     # Prompt user to enter the URL to check
     url = input("Enter the URL to check page speed: ")
@@ -11,5 +14,11 @@ def check_page_speed():
     page_load_time = end_time - start_time
     # Print the page load time in seconds
     print(f"Page load time: {page_load_time:.2f} seconds")
+    print("Execution dans un thread")
+
+    # Création d'un thread
+    my_thread = threading.Thread(target=check_page_speed)
+    my_thread.start()
+
 
 check_page_speed()
