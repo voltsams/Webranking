@@ -5,11 +5,11 @@ import threading
 
 class CheckPageSpeed(threading.Thread):
     def run(self):
-        # Prompt user to enter the URL to check
-        url = "https://www.youtube.com/watch?v=3dEPY3HiPtI"
+        # TODO Give a list and implements the work on the list
+
         # Send a GET request to the given URL and record the start time
         start_time = time.time()
-        response = requests.get(url)
+        response = requests.get()
         # Record the end time and calculate the page load time
         end_time = time.time()
         page_load_time = end_time - start_time
@@ -17,4 +17,3 @@ class CheckPageSpeed(threading.Thread):
         print(f"Page load time: {page_load_time:.2f} seconds")
         print("Temps d'exécution du CPU : ", time.process_time())
         print("Execution dans un thread")
-

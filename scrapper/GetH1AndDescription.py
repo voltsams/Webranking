@@ -1,8 +1,10 @@
+import threading
+
 import requests
 from bs4 import BeautifulSoup
 
 
-def get_h1_and_description():
+class GetH1AndDescription(threading.Thread):
     url = input("Enter the URL of the web page: ")
 
     # Make a request to the URL
@@ -22,6 +24,3 @@ def get_h1_and_description():
         print('Meta description found: ' + meta_description['content'])
     else:
         print('No meta description found')
-
-
-get_h1_and_description()
