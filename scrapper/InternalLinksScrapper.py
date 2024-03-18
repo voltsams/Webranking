@@ -28,6 +28,14 @@ class InternalLinksScrapper:
             href = link.get('href')
             if href:
                 parsed_link = urlparse(href)
-                if (parsed_link.netloc == '' and (re.compile("^/").match(href) or re.compile("^../").match(href)) or re.compile("^./").match(href)) or parsed_link.netloc == urlparse(url).netloc:
+                if ((parsed_link.netloc == ''
+                     and (re.compile("^/").match(href)
+                          and not href.endswith("svg")
+                          and not href.endswith(".jpg")
+                          and not href.endswith(".png")
+                          and ":" not in href and "(" not in href
+                          or re.compile("^../").match(href))
+                        or re.compile("^./").match(href))
+                        or parsed_link.netloc == urlparse(url).netloc):
                     href = urljoin(url_base, href)
                     self.links.add(href)
