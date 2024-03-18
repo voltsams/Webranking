@@ -1,7 +1,9 @@
 from scrapper.CheckPageSpeed import CheckPageSpeed
 import GlobalsModule
 
-GlobalsModule.Globals.prompt_user_to_enter_url(cls=GlobalsModule)
+import tools.Thread1
 
-threadCheckPageSpeed = CheckPageSpeed()
-threadCheckPageSpeed.start()
+#thread1 = tools.Thread1.Thread1()
+#thread1.start()
+#thread2 = tools.Thread1.Thread1()
+#thread2.start()
