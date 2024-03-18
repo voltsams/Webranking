@@ -1,5 +1,6 @@
 class Globals:
-    siteBaseUrl = "https://www.google.com"
+    siteBaseUrl = ""
+
 
     @staticmethod
     def prompt_user_to_enter_url(cls):
