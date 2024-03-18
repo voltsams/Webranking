@@ -2,6 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+from urllib.parse import urljoin
 
 
 class InternalLinksScrapper:
@@ -16,7 +17,8 @@ class InternalLinksScrapper:
         parsed = parsed._replace(query='')
         parsed = parsed._replace(fragment='')
         return parsed.geturl()
-    #TODO penser à gérer le cas des sous domaines
+
+    # TODO penser à gérer le cas des sous domaines
 
     def extract_internal_links(self, url):
         url_base = self.base_url(url)
@@ -26,7 +28,6 @@ class InternalLinksScrapper:
             href = link.get('href')
             if href:
                 parsed_link = urlparse(href)
-                if parsed_link.netloc == '' or parsed_link.netloc == urlparse(url).netloc:
-                    if re.compile("^/").match(href):
-                        href = url_base+href
+                if (parsed_link.netloc == '' and (re.compile("^/").match(href) or re.compile("^../").match(href)) or re.compile("^./").match(href)) or parsed_link.netloc == urlparse(url).netloc:
+                    href = urljoin(url_base, href)
                     self.links.add(href)
