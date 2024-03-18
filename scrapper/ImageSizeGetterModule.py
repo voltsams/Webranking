@@ -2,6 +2,7 @@ import threading
 import requests
 from bs4 import BeautifulSoup as bs
 
+
 class ImageSizeGetter(threading.Thread):
     # load the webpage content
     r = requests.get('https://www.google.com/')

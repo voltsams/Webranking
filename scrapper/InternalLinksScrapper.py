@@ -1,3 +1,4 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
@@ -26,4 +27,6 @@ class InternalLinksScrapper:
             if href:
                 parsed_link = urlparse(href)
                 if parsed_link.netloc == '' or parsed_link.netloc == urlparse(url).netloc:
+                    if re.compile("^/").match(href):
+                        href = url_base+href
                     self.links.add(href)
