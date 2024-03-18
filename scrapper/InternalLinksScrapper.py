@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from urllib.parse import urljoin
 
 
-class InternalLinksScrapper:
+class InternalLinksScrapper():
     def __init__(self):
         self.links = set()
 
@@ -26,7 +26,7 @@ class InternalLinksScrapper:
         soup = BeautifulSoup(response.content, "html.parser")
         for link in soup.find_all('a'):
             href = link.get('href')
-            if href:
+            if href and href not in self.links:
                 parsed_link = urlparse(href)
                 if (parsed_link.netloc == '' and (re.compile("^/").match(href) or re.compile("^../").match(href)) or re.compile("^./").match(href)) or parsed_link.netloc == urlparse(url).netloc:
                     href = urljoin(url_base, href)
