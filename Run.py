@@ -1,17 +1,9 @@
-from scrapper.CheckPageSpeed import CheckPageSpeed
-import GlobalsModule
-import entities.SingletonPatternDictionaryOfPagesModule as Pages
-import tools.Thread1
+import tools.Thread1 as Thread1
+import tools.Thread2 as Thread2
 
-# thread1 = tools.Thread1.Thread1()
-# thread1.start()
-# thread2 = tools.Thread1.Thread1()
-# thread2.start()
+thread1 = Thread1.Thread1()
+thread2 = Thread2.Thread2()
 
-
-# global_pages = GlobalsModule.GlobalPages()
-# https://www.cleor.com/
-
-#thread1 = tools.Thread1.Thread1()
-#thread1.run()
-tools.Thread1.Thread1().run(cls=tools.Thread1.Thread1)
+thread1.run()
+thread1.join()
+thread2.run()

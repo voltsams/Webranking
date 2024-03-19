@@ -1,10 +1,12 @@
 import os
 
+
 def assign_note(size):
     if size > 500 * 1024:  # Convert KB to bytes
         return 1
     else:
         return 10
+
 
 def process_images(directory):
     notes = []
@@ -15,6 +17,7 @@ def process_images(directory):
             note = assign_note(size)
             notes.append((note, file_path))
     return notes
+
 
 if __name__ == "__main__":
     directory = input("Enter the directory containing images: ")
