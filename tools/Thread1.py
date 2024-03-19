@@ -7,7 +7,7 @@ import entities.PageModule as PageModule
 import scrapper.GetH1AndDescription as hasH1Check
 import entities.SingletonPatternDictionaryOfPagesModule as Pages
 
-
+InternalPagesDict = dict()
 class Thread1:
     @staticmethod
     def run(cls):
@@ -21,16 +21,19 @@ class Thread1:
             queueModule.internal_links_queue.put(link)
 
             cls.consume_queue()
+
             # https://www.cleor.com/
 
     @staticmethod
     def consume_queue():
         current_link = queueModule.internal_links_queue.get()
+        print("je consomme , ",current_link)
         current_page = PageModule.Page(current_link)
 
         # TODO MOVE DECLARATION OF SINGLETON
 
         GlobalsModule.singleton_list.add_page(current_link, current_page)
+        print("test vsa ",GlobalsModule.singleton_list.__str__())
 
         # current_page.hasTls = tlsCheck.check_tls(current_link)
 
@@ -39,10 +42,11 @@ class Thread1:
         # TODO Créer UI avec chargement multithread des valeurs
         thread_check_page_speed = CheckPageSpeed(current_link)
         thread_check_page_speed.start()
-        thread_check_page_speed.eventPageLoaded.wait()
+        thread_check_page_speed.join()
+        #thread_check_page_speed.eventPageLoaded.wait()
 
-        if current_link in GlobalsModule.singleton_list.list_of_web_pages:
-            GlobalsModule.singleton_list.list_of_web_pages[current_link].loadingTime = thread_check_page_speed.page_load_time
+        #if current_link in GlobalsModule.singleton_list.list_of_web_pages:
+         #   GlobalsModule.singleton_list.list_of_web_pages[current_link].loadingTime = thread_check_page_speed.page_load_time
 
         # checkH1 = hasH1Check.GetH1AndDescription(current_link)
         # checkH1.start()

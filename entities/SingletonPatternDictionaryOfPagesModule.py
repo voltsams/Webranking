@@ -8,7 +8,6 @@ import entities.PageModule
 class SingletonListOfWebPages:
     _instance = None
     _initialized = False
-    _lock = threading.Lock()
     list_of_web_pages = dict()
 
     def __new__(cls, *args, **kwargs):
@@ -16,7 +15,8 @@ class SingletonListOfWebPages:
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def __init__(self):
+    def __init__(self, list_of_web_pages):
+        self.list_of_web_pages = list_of_web_pages
         if not self._initialized:
             self.list_of_web_pages = dict()
 
@@ -26,9 +26,18 @@ class SingletonListOfWebPages:
             self._initialized = True
 
     def add_page(self, url: str, page_instance: entities.PageModule.Page):
-        with self._lock:
-            self.list_of_web_pages[url] = page_instance
+        _lock = threading.Lock()
+        _lock.acquire()
+        self.list_of_web_pages[url] = page_instance
+        _lock.release()
 
+    def __str__(self):
+        ss = ""
+        for page in self.list_of_web_pages.keys():
+            ss += str(page) + " " + str(self.list_of_web_pages[page]) + ", "
+        return ss
+
+# if __name__ == "__main__":
 # Example usage:
 # Creating pages
 # page1 = Page("https://example1.com")
