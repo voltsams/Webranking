@@ -9,8 +9,9 @@ class CheckPageSpeed(threading.Thread):
     def __init__(self, url):
         super().__init__()
         self.url = url
-
     page_load_time = 0.0
+    # create an instance of an event
+    eventPageLoaded = threading.Event()
 
     def run(self):
         # TODO Give a list and implements the work on the list
@@ -21,6 +22,7 @@ class CheckPageSpeed(threading.Thread):
         # Record the end time and calculate the page load time
         end_time = time.time()
         self.page_load_time = end_time - start_time
+        self.eventPageLoaded.set()
         # Print the page load time in seconds
         print(f"Page load time: {self.page_load_time:.2f} seconds")
         print("Temps d'exécution du CPU : ", time.process_time())
