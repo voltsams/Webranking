@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from urllib.parse import urljoin
 
 
-class InternalLinksScrapper():
+class InternalLinksScrapper:
     def __init__(self):
         self.links = set()
 
@@ -30,10 +30,14 @@ class InternalLinksScrapper():
                 parsed_link = urlparse(href)
                 if ((parsed_link.netloc == ''
                      and (re.compile("^/").match(href)
-                          and not href.endswith("svg")
+                          and not href.endswith(".svg")
                           and not href.endswith(".jpg")
                           and not href.endswith(".png")
-                          and ":" not in href and "(" not in href
+                          and not href.endswith(".pdf")
+                          and not href.endswith(".doc")
+                          and not href.endswith(".xml")
+                          and ":" not in href
+                          and "(" not in href
                           or re.compile("^../").match(href))
                         or re.compile("^./").match(href))
                         or parsed_link.netloc == urlparse(url).netloc):
