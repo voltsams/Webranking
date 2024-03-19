@@ -1,8 +1,15 @@
+import threading
+
+import entities.PageModule
+
+
 # Singleton Pattern needed to access page objects in thread safe way
 # The key is the URL of the Page the value is the Page instance
 class SingletonListOfWebPages:
     _instance = None
     _initialized = False
+    _lock = threading.Lock()
+    list_of_web_pages = dict()
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
@@ -11,16 +18,16 @@ class SingletonListOfWebPages:
 
     def __init__(self):
         if not self._initialized:
-            self.list_of_web_pages = {}
+            self.list_of_web_pages = dict()
 
             # Example of adding a page
             # self.add_page("https://example.com", Page("https://example.com"))
 
             self._initialized = True
 
-    def add_page(self, url, page_instance):
-        self.list_of_web_pages[url] = page_instance
-
+    def add_page(self, url: str, page_instance: entities.PageModule.Page):
+        with self._lock:
+            self.list_of_web_pages[url] = page_instance
 
 # Example usage:
 # Creating pages
