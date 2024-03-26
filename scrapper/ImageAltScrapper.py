@@ -4,34 +4,20 @@ from bs4 import BeautifulSoup
 
 
 class ImageAltScrapper(threading.Thread):
+    def __init__(self, links_queue):
+        super().__init__()
+        self.links_queue = links_queue
 
-    # Function to check if an image has an "alt" attribute
-    def has_alt_attribute(img):
-        return "alt" in img.attrs
-
-    # Get the URL from the user
-    url = "https://en.wikipedia.org/wiki"
-
-    # Make a request to the URL and get the HTML content
-    response = requests.get(url)
-    html_content = response.content
-
-    # Parse the HTML content using BeautifulSoup
-    soup = BeautifulSoup(html_content, 'html.parser')
-
-    # Find all the image tags on the page
-    images = soup.find_all('img')
-
-    # Check if each image has an "alt" attribute or not
-    if len(images) > 0:
-        alt_count = 0
+    def run(self):
+        # Faites une requête à l'URL
+        response = requests.get(self.links_queue)
+        # Analysez le contenu HTML de la page en utilisant BeautifulSoup
+        soup = BeautifulSoup(response.content, 'html.parser')
+        # Trouvez toutes les balises d'image sur la page
+        images = soup.find_all('img')
+        # Vérifiez si chaque image a un attribut "alt" ou non
         for image in images:
-            if has_alt_attribute(image):
-                alt_count += 1
-                print(f"The image with source '{image['src']}' has an 'alt' attribute.")
+            if 'alt' in image.attrs:
+                print(f"L'image avec la source '{image['src']}' a un attribut 'alt'.")
             else:
-                print(f"The image with source  '{image['src']}' does not have an 'alt' attribute.")
-
-        if alt_count == len(images):
-            print("Every image has an 'alt' attribute")
-            #TODO mettre à jour ou implémenter le score
+                print(f"L'image avec la source '{image['src']}' n'a pas d'attribut 'alt'.")
