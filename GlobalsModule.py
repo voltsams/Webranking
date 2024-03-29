@@ -7,12 +7,10 @@ singleton_list = SingletonListOfWebPages.__new__(cls=SingletonListOfWebPages)
 
 class Globals:
     siteBaseUrl = ""
-    #dic_of_pages = dict()
 
-    @staticmethod
-    def prompt_user_to_enter_url(cls):
-        cls.siteBaseUrl = input("Enter the URL to analyze : ")
-        #cls.dic_of_pages = dict()
+    @classmethod
+    def prompt_user_to_enter_url(cls, url):
+        cls.siteBaseUrl = url
 
 
 class GlobalPages:
@@ -33,15 +31,3 @@ class GlobalPages:
         with self._lock:
             return self.pages[url]
 
-# Example usage:
-# Creating pages
-# page1 = Page("https://example1.com")
-
-
-# Adding pages to global variable
-# global_pages = GlobalPages()
-# global_pages.add_page("https://example1.com", page1)
-
-
-# Retrieving pages
-# print(global_pages.get_page("https://example1.com").url)

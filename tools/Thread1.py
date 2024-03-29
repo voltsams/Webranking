@@ -1,5 +1,5 @@
 import threading
-import GlobalsModule
+from UI.gui import Globals
 from scrapper.InternalLinksScrapper import InternalLinksScrapper
 
 
@@ -9,9 +9,14 @@ class Thread1(threading.Thread):
         self.links_queue = links_queue
 
     def run(self):
-        GlobalsModule.Globals.prompt_user_to_enter_url(cls=GlobalsModule.Globals)
+        # Utilisation de l'url récupéré depuis le gui
+        url = Globals.siteBaseUrl
+        if not url:
+            print("URL non renseigné :( ")
+            return
+
         scrapper = InternalLinksScrapper()
-        scrapper.extract_internal_links(GlobalsModule.Globals.siteBaseUrl)
+        scrapper.extract_internal_links(url)
         print("Internal Links:")
         # Recursive call to treat each page
         try:
@@ -19,7 +24,7 @@ class Thread1(threading.Thread):
             processed_links = set()
 
             # Extraction des liens internes une seule fois
-            scrapper.extract_internal_links(GlobalsModule.Globals.siteBaseUrl)
+            scrapper.extract_internal_links(url)
             for link in scrapper.links:
                 # Vérifier si le lien a déjà été traité
                 if link not in processed_links:

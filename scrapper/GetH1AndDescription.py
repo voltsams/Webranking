@@ -12,12 +12,12 @@ class GetH1AndDescription(threading.Thread):
         self.hasMetaDescription = False
 
     def run(self):
+        print("URL :", self.url)
         # Make a request to the URL
         response = requests.get(self.url)
 
         # Parse the HTML content of the page using BeautifulSoup
         soup = BeautifulSoup(response.content, 'html.parser')
-
         # Find the title h1 tag and get its content
         h1_title = soup.find_all('h1')
         for h1_title in h1_title:

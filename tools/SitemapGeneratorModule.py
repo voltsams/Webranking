@@ -4,13 +4,14 @@ from bs4 import BeautifulSoup
 
 # class SitemapGenerator(threading.Thread):
 
-#website = 'https://portfolio.eu/'
+# website = 'https://portfolio.eu/'
 website = 'https://fr.lipsum.com/'
 base_url = website
 if website.endswith('/'):
     base_url = website[:-1]
 
 scanned = []
+
 
 def clean(a_eles):
     links = []
@@ -24,7 +25,7 @@ def clean(a_eles):
         if link.startswith('/'):
             link = '{}{}'.format(base_url, link)
 
-        if link.startswith('http://') != True and link.startswith('https://') != True:
+        if not link.startswith('http://') and not link.startswith('https://'):
             link = '{}/{}'.format(base_url, link)
 
         if link.startswith(base_url) is False:
@@ -35,6 +36,7 @@ def clean(a_eles):
 
     return [links, skip_links]
 
+
 def get_next_scan_urls(urls):
     links = []
     for u in urls:
@@ -42,8 +44,9 @@ def get_next_scan_urls(urls):
             links.append(u)
     return links
 
+
 def scan(url):
-    #for page in range(len(scanned))
+    # for page in range(len(scanned))
     if url not in scanned:
         print('Scan url: {}'.format(url))
         scanned.append(url)
@@ -81,5 +84,6 @@ def main():
     f = open('sitemap.xml', 'w')
     f.write(xml)
     f.close()
+
 
 main()
