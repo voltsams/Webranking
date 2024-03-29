@@ -1,8 +1,6 @@
 import requests
 import time
 import threading
-import entities.PageModule
-from entities import PageModule
 import GlobalsModule
 
 
@@ -28,4 +26,3 @@ class CheckPageSpeed(threading.Thread):
         print(f"Page load time: {self.page_load_time:.2f} seconds")
         GlobalsModule.singleton_list.list_of_web_pages[self.url].loadingTime = self.page_load_time
         print("Temps d'exécution du CPU : ", time.process_time())
-        print("Execution dans le thread CheckPageSpeed")
